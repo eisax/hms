@@ -181,7 +181,7 @@ The Laravel application will now be running in the `hms-app-1` container.
 
 
 
-# c) HMS on aws and git CI/CD 
+# c) HMS on AWD and GIT CI/CD Guide
 
 # 1. Setup AWS Environment
 
