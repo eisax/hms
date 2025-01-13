@@ -1,7 +1,7 @@
 # Hospital Management System
 
 
-# a) Hospital Management System on local machine
+# a) HMS on local machine
 
 ## Clone a Project
 
@@ -178,7 +178,7 @@ The Laravel application will now be running in the `hms-app-1` container.
 
 
 
-# c) DEPLOYING Hospital Management System ON AWS VIA GIT CI/CD 
+# c) HMS on aws and git CI/CD 
 
 # 1. Setup AWS Environment
 
