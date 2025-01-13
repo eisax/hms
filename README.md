@@ -1,7 +1,7 @@
 # Hospital Management System
 
 
-# a Hospital Management System on local machine
+# a) Hospital Management System on local machine
 
 ## Clone a Project
 
@@ -15,7 +15,7 @@
 - **Run `npm install`**
 - **Run `npm run dev`**
 
-# HMS Docker and AWS Deployment Guide
+# b) HMS Docker and AWS Deployment Guide
 
 This README provides a comprehensive guide to deploying the HMS application using Docker containers. The steps cover installation, container creation, running migrations, and application setup.
 
@@ -178,7 +178,7 @@ The Laravel application will now be running in the `hms-app-1` container.
 
 
 
-# c DEPLOYING Hospital Management System ON AWS VIA GIT CI/CD 
+# c) DEPLOYING Hospital Management System ON AWS VIA GIT CI/CD 
 
 # 1. Setup AWS Environment
 
