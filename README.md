@@ -5,15 +5,18 @@
 
 ## Clone a Project
 
+```bash
+   git clone https://github.com/eisax/hms.git
+   cd hms
+```
+
 - Run `composer install`
 - Run `php artisan key:generate`
-- Run `php artisan jwt:secret`
 - **Setup .env file**
 - **Run migration `php artisan migrate`**
 - **Run seeder `php artisan db:seed`**
-- **Create virtual host with name `local.hms.com`**
-- **Run `npm install`**
-- **Run `npm run dev`**
+- **Run seeder `php artisan serve`**
+
 
 # b) HMS Docker and AWS Deployment Guide
 
@@ -39,7 +42,7 @@ This README provides a comprehensive guide to deploying the HMS application usin
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/eisax/hms.git
 cd hms
 ```
 
