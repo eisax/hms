@@ -3,14 +3,14 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches:
-      - feature/update-2  # Trigger on this branch or any other branch you specify
+      - feature/update-2  # Trigger deployment for this branch
 
 env:
   AWS_REGION: eu-west-1                   # Your preferred AWS region
-  ECR_REPOSITORY_APP: laravel-app-repo    # ECR repository for Laravel app
-  ECS_SERVICE: laravel-app-service        # ECS service name for Laravel
-  ECS_CLUSTER: laravel-app-cluster        # ECS cluster name
-  ECS_TASK_DEFINITION: .aws/task-def.json # Path to your ECS task definition
+  ECR_REPOSITORY_APP: laravel-app-repo     # ECR repository for Laravel app
+  ECS_SERVICE: laravel-app-service         # ECS service name for Laravel app
+  ECS_CLUSTER: laravel-app-cluster         # ECS cluster name
+  ECS_TASK_DEFINITION: .aws/task-def.json  # Path to your ECS task definition
   CONTAINER_NAME_APP: laravel-app-container
 
 permissions:
@@ -32,9 +32,21 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Create ECR repository (if it doesn't exist)
+    - name: Delete existing ECS resources (Task definitions and services)
       run: |
-        aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
+        echo "Cleaning up ECS resources..."
+        aws ecs delete-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --force || true
+        aws ecs deregister-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} || true
+      continue-on-error: true
+
+    - name: Delete existing ECR repositories
+      run: |
+        echo "Deleting existing ECR repositories..."
+        aws ecr delete-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --force || true
+
+    - name: Create ECR repositories
+      run: |
+        echo "Creating new ECR repositories..."
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --region ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
@@ -44,10 +56,10 @@ jobs:
     - name: Build, tag, and push Laravel app image to ECR
       id: build-laravel-image
       run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }} .
-        docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
-      env:
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_URL=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
+        docker build -t $IMAGE_URL .
+        docker push $IMAGE_URL
+        echo "::set-output name=image::$IMAGE_URL"
 
     - name: Update ECS task definition with new Laravel app image URL
       id: task-def
@@ -57,7 +69,7 @@ jobs:
         container-name: ${{ env.CONTAINER_NAME_APP }}
         image: ${{ steps.build-laravel-image.outputs.image }}
 
-    - name: Deploy updated ECS task definition
+    - name: Deploy ECS service
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
