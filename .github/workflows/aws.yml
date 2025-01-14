@@ -3,7 +3,7 @@ name: Deploy to Amazon ECS (EC2)
 on:
   push:
     branches:
-      - main
+      - feature/update-2
 
 env:
   AWS_REGION: eu-west-1
