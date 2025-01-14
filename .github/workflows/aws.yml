@@ -46,7 +46,8 @@ jobs:
 
     - name: Create ECR repositories
       run: |
-        echo "Creating new ECR repositories..."
+        echo "Ensuring ECR repositories exist..."
+        aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --region ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
