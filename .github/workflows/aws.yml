@@ -66,6 +66,7 @@ jobs:
       id: generate-task-def
       run: |
         echo "Creating ECS task definition..."
+        mkdir -p .aws  # Create the .aws directory if it doesn't exist
         cat <<EOF > .aws/task-def.json
         {
           "family": "laravel-app-family",
