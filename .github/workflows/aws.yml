@@ -3,88 +3,66 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches:
-      - feature/update-2  # or any other branch you want to trigger from
+      - main
+      - feature/update-2
 
 env:
-  AWS_REGION: eu-west-1                    # Your preferred AWS region
-  ECR_REPOSITORY_APP: laravel-app-repo      # ECR repository for Laravel app
-  ECR_REPOSITORY_DB: mysql-db-repo          # ECR repository for MySQL
-  ECS_SERVICE: laravel-app-service          # ECS service name for Laravel
-  ECS_CLUSTER: laravel-app-cluster          # ECS cluster name
-  ECS_TASK_DEFINITION: .aws/task-def.json  # Path to your ECS task definition
+  AWS_REGION: eu-west-1
+  ECR_REPOSITORY_APP: laravel-app-repo
+  ECS_SERVICE: laravel-app-service
+  ECS_CLUSTER: laravel-app-cluster
   CONTAINER_NAME_APP: laravel-app-container
-  CONTAINER_NAME_DB: mysql-container
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    name: Deploy to ECS
-    runs-on: ubuntu-24.04
+    name: Deploy Laravel App to ECS
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Create ECR repositories (if they don't exist)
+    - name: Create ECR repository if not exists
       run: |
-        echo "Creating new ECR repositories..."
+        echo "Ensuring ECR repository for Laravel exists..."
         aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
-        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --region ${{ env.AWS_REGION }}
-        
-        aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_DB }} || \
-        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_DB }} --region ${{ env.AWS_REGION }}
+        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }}
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build, tag, and push Laravel app image to ECR
       id: build-laravel-image
       run: |
+        echo "Building Docker image for Laravel app..."
         docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }} .
+        echo "Pushing Docker image to ECR..."
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
-      env:
-        IMAGE_TAG: ${{ github.sha }}
-    
-    - name: Build, tag, and push MySQL image to ECR
-      id: build-mysql-image
-      run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }} -f Dockerfile.mysql .
-        docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }}
-      env:
-        IMAGE_TAG: ${{ github.sha }}
 
-    - name: Create ECS Execution Role
+    - name: Create ECS Task Definition
+      id: create-task-def
       run: |
-        echo "Creating ECS Execution Role..."
-        aws iam create-role --role-name ecsTaskExecutionRole \
-          --assume-role-policy-document file://trust-policy.json
-          
-        aws iam put-role-policy --role-name ecsTaskExecutionRole --policy-name ecsTaskExecutionPolicy \
-          --policy-document file://role-policy.json
-
-    - name: Create ECS task definition
-      run: |
-        echo "Creating ECS task definition..."
-        cat <<EOF > .aws/task-def.json
+        echo "Creating ECS task definition JSON file..."
+        cat <<EOF > task-def.json
         {
-          "family": "laravel-app-family",
-          "networkMode": "awsvpc",
+          "family": "${{ env.ECS_SERVICE }}",
           "containerDefinitions": [
             {
               "name": "${{ env.CONTAINER_NAME_APP }}",
               "image": "${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}",
-              "cpu": 512,
-              "memory": 1024,
+              "memory": 512,
+              "cpu": 256,
               "essential": true,
               "portMappings": [
                 {
@@ -92,79 +70,23 @@ jobs:
                   "hostPort": 80
                 }
               ],
-              "environment": [
-                {
-                  "name": "APP_ENV",
-                  "value": "production"
-                },
-                {
-                  "name": "DB_CONNECTION",
-                  "value": "mysql"
-                },
-                {
-                  "name": "DB_HOST",
-                  "value": "mysql-container"
-                },
-                {
-                  "name": "DB_DATABASE",
-                  "value": "hmsdb"
-                },
-                {
-                  "name": "DB_USERNAME",
-                  "value": "root"
-                },
-                {
-                  "name": "DB_PASSWORD",
-                  "value": "root"
-                }
-              ],
               "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                  "awslogs-group": "/ecs/laravel-app",
-                  "awslogs-region": "eu-west-1",
+                  "awslogs-group": "/ecs/${{ env.ECS_SERVICE }}",
+                  "awslogs-region": "${{ env.AWS_REGION }}",
                   "awslogs-stream-prefix": "ecs"
                 }
               }
-            },
-            {
-              "name": "${{ env.CONTAINER_NAME_DB }}",
-              "image": "mysql:8.0",
-              "cpu": 256,
-              "memory": 512,
-              "essential": true,
-              "portMappings": [
-                {
-                  "containerPort": 3306,
-                  "hostPort": 3306
-                }
-              ],
-              "environment": [
-                {
-                  "name": "MYSQL_ROOT_PASSWORD",
-                  "value": "root"
-                },
-                {
-                  "name": "MYSQL_DATABASE",
-                  "value": "hmsdb"
-                }
-              ]
             }
-          ],
-          "requiresCompatibilities": [
-            "FARGATE"
-          ],
-          "cpu": "1024",
-          "memory": "2048",
-          "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole"
+          ]
         }
         EOF
-        echo "Task definition file is created."
 
     - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: .aws/task-def.json
+        task-definition: task-def.json
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
