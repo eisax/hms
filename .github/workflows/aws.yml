@@ -1,10 +1,9 @@
-name: Deploy to Amazon ECS
+name: Deploy to Amazon ECS (EC2)
 
 on:
   push:
     branches:
       - main
-      - feature/update-2
 
 env:
   AWS_REGION: eu-west-1
@@ -18,7 +17,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy Laravel App to ECS
+    name: Deploy Laravel App to ECS (EC2)
     runs-on: ubuntu-latest
 
     steps:
@@ -34,29 +33,26 @@ jobs:
 
     - name: Create ECR repository if not exists
       run: |
-        echo "Ensuring ECR repository for Laravel exists..."
         aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }}
 
     - name: Login to Amazon ECR
-      id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build, tag, and push Laravel app image to ECR
-      id: build-laravel-image
       run: |
-        echo "Building Docker image for Laravel app..."
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }} .
-        echo "Pushing Docker image to ECR..."
+        docker build -t ${{ env.ECR_REPOSITORY_APP }} .
+        docker tag ${{ env.ECR_REPOSITORY_APP }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
 
     - name: Create ECS Task Definition
-      id: create-task-def
       run: |
         echo "Creating ECS task definition JSON file..."
         cat <<EOF > task-def.json
         {
           "family": "${{ env.ECS_SERVICE }}",
+          "networkMode": "bridge",
+          "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
           "containerDefinitions": [
             {
               "name": "${{ env.CONTAINER_NAME_APP }}",
@@ -67,7 +63,7 @@ jobs:
               "portMappings": [
                 {
                   "containerPort": 80,
-                  "hostPort": 80
+                  "hostPort": 0
                 }
               ],
               "logConfiguration": {
@@ -83,24 +79,25 @@ jobs:
         }
         EOF
 
+    - name: Register ECS Task Definition
+      run: |
+        echo "Registering ECS Task Definition..."
+        aws ecs register-task-definition --cli-input-json file://task-def.json
+
     - name: Ensure ECS Service exists
       run: |
-        echo "Checking if ECS service exists..."
-        if ! aws ecs describe-services --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }} --query "services[?status=='ACTIVE'] | length(@)" | grep -q 1; then
-          echo "Service does not exist. Creating ECS service..."
+        if ! aws ecs describe-services --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }} | grep ACTIVE; then
+          echo "Creating ECS service..."
           aws ecs create-service \
             --cluster ${{ env.ECS_CLUSTER }} \
             --service-name ${{ env.ECS_SERVICE }} \
             --task-definition ${{ env.ECS_SERVICE }} \
             --desired-count 1 \
-            --launch-type FARGATE \
-            --network-configuration "awsvpcConfiguration={subnets=[subnet-xxxxxxxx],securityGroups=[sg-xxxxxxxx],assignPublicIp=ENABLED}"
+            --launch-type EC2
+        else
+          echo "Updating ECS service..."
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service ${{ env.ECS_SERVICE }} \
+            --task-definition ${{ env.ECS_SERVICE }}
         fi
-
-    - name: Deploy to ECS
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: task-def.json
-        service: ${{ env.ECS_SERVICE }}
-        cluster: ${{ env.ECS_CLUSTER }}
-        wait-for-service-stability: true
