@@ -3,17 +3,15 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches:
-      - feature/update-2  # or any other branch you want to trigger from
+      - feature/update-2  # Trigger on this branch or any other branch you specify
 
 env:
   AWS_REGION: eu-west-1                   # Your preferred AWS region
-  ECR_REPOSITORY_APP: laravel-app-repo     # ECR repository for Laravel app
-  ECR_REPOSITORY_DB: mysql-db-repo         # ECR repository for MySQL
-  ECS_SERVICE: laravel-app-service         # ECS service name for Laravel
-  ECS_CLUSTER: laravel-app-cluster         # ECS cluster name
+  ECR_REPOSITORY_APP: laravel-app-repo    # ECR repository for Laravel app
+  ECS_SERVICE: laravel-app-service        # ECS service name for Laravel
+  ECS_CLUSTER: laravel-app-cluster        # ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-def.json # Path to your ECS task definition
   CONTAINER_NAME_APP: laravel-app-container
-  CONTAINER_NAME_DB: mysql-container
 
 permissions:
   contents: read
@@ -34,13 +32,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Create ECR repositories (if they don't exist)
+    - name: Create ECR repository (if it doesn't exist)
       run: |
         aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --region ${{ env.AWS_REGION }}
-        
-        aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_DB }} || \
-        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_DB }} --region ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -53,24 +48,16 @@ jobs:
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
       env:
         IMAGE_TAG: ${{ github.sha }}
-    
-    - name: Build, tag, and push MySQL image to ECR
-      id: build-mysql-image
-      run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }} -f Dockerfile.mysql .
-        docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }}
-      env:
-        IMAGE_TAG: ${{ github.sha }}
 
-    - name: Update ECS task definition with new image URLs
+    - name: Update ECS task definition with new Laravel app image URL
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME_APP }}
         image: ${{ steps.build-laravel-image.outputs.image }}
-        
-    - name: Deploy new ECS task definition
+
+    - name: Deploy updated ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
