@@ -41,9 +41,14 @@ jobs:
 
     - name: Build, tag, and push Laravel app image to ECR
       run: |
+        echo "Building Docker image..."
         docker build -t ${{ env.ECR_REPOSITORY_APP }} .
-        docker tag ${{ env.ECR_REPOSITORY_APP }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
-        docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
+
+        echo "Tagging Docker image for ECR..."
+        docker tag ${{ env.ECR_REPOSITORY_APP }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
+
+        echo "Pushing Docker image to ECR..."
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY_APP }}:${{ github.sha }}
 
     - name: Create ECS Task Definition
       run: |
