@@ -6,11 +6,12 @@ on:
       - feature/update-2  # or any other branch you want to trigger from
 
 env:
-  AWS_REGION: eu-west-1                   # Your preferred AWS region
-  ECR_REPOSITORY_APP: laravel-app-repo     # ECR repository for Laravel app
-  ECR_REPOSITORY_DB: mysql-db-repo         # ECR repository for MySQL
-  ECS_SERVICE: laravel-app-service         # ECS service name for Laravel
-  ECS_CLUSTER: laravel-app-cluster         # ECS cluster name
+  AWS_REGION: eu-west-1                    # Your preferred AWS region
+  ECR_REPOSITORY_APP: laravel-app-repo      # ECR repository for Laravel app
+  ECR_REPOSITORY_DB: mysql-db-repo          # ECR repository for MySQL
+  ECS_SERVICE: laravel-app-service          # ECS service name for Laravel
+  ECS_CLUSTER: laravel-app-cluster          # ECS cluster name
+  ECS_TASK_DEFINITION: .aws/task-def.json  # Path to your ECS task definition
   CONTAINER_NAME_APP: laravel-app-container
   CONTAINER_NAME_DB: mysql-container
 
@@ -35,7 +36,7 @@ jobs:
 
     - name: Create ECR repositories (if they don't exist)
       run: |
-        echo "Checking if ECR repositories exist..."
+        echo "Creating new ECR repositories..."
         aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_APP }} || \
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_APP }} --region ${{ env.AWS_REGION }}
         
@@ -57,16 +58,23 @@ jobs:
     - name: Build, tag, and push MySQL image to ECR
       id: build-mysql-image
       run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }} .
+        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }} -f Dockerfile.mysql .
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_DB }}:${{ github.sha }}
       env:
         IMAGE_TAG: ${{ github.sha }}
 
-    - name: Generate ECS task definition
-      id: generate-task-def
+    - name: Create ECS Execution Role
+      run: |
+        echo "Creating ECS Execution Role..."
+        aws iam create-role --role-name ecsTaskExecutionRole \
+          --assume-role-policy-document file://trust-policy.json
+          
+        aws iam put-role-policy --role-name ecsTaskExecutionRole --policy-name ecsTaskExecutionPolicy \
+          --policy-document file://role-policy.json
+
+    - name: Create ECS task definition
       run: |
         echo "Creating ECS task definition..."
-        mkdir -p .aws  # Create the .aws directory if it doesn't exist
         cat <<EOF > .aws/task-def.json
         {
           "family": "laravel-app-family",
@@ -147,11 +155,13 @@ jobs:
             "FARGATE"
           ],
           "cpu": "1024",
-          "memory": "2048"
+          "memory": "2048",
+          "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole"
         }
         EOF
+        echo "Task definition file is created."
 
-    - name: Update ECS service with new task definition
+    - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: .aws/task-def.json
