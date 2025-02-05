@@ -41,44 +41,48 @@
                 </div>
             @endif
         </div>
-        <div class="bg-white rounded-15 shadow-md width-540 px-5 px-sm-7 py-10 mx-auto">
+        <div class="auth-form-container px-5 px-sm-7 py-10 mx-auto width-540">
             <h1 class="text-center mb-7">{{ __('auth.sign_in') }}</h1>
-            <form method="post" action="{{ url('/login') }}">
+            <form method="post" action="{{ url('/login') }}" class="auth-form">
                 @csrf
-                <div class="mb-sm-7 mb-4">
-                    <label for="email" class="form-label">
-                        {{ __('auth.email') . ':' }}<span class="required"></span>
-                    </label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                        required placeholder="{{ __('auth.email') }}"
-                        value="{{ Cookie::get('email') !== null ? Cookie::get('email') : old('email') }}">
+                <div class="form-floating mb-sm-7 mb-4">
+                    <input name="email" type="email" class="form-control" id="email" 
+                           placeholder="{{ __('auth.email') }}"
+                           value="{{ Cookie::get('email') !== null ? Cookie::get('email') : old('email') }}"
+                           required>
+                    <label for="email">{{ __('auth.email') }}</label>
                 </div>
-                <div class="mb-sm-7 mb-4">
-                    <div class="d-flex justify-content-between">
-                        <label for="password" class="form-label">{{ __('auth.password') . ':' }}<span
-                                class="required"></span></label>
-                        <a href="{{ url('/password/reset') }}" class="link-info fs-6 text-decoration-none">
-                            {{ __('auth.login.forgot_password') . '?' }}
-                        </a>
+                
+                <div class="form-floating mb-sm-7 mb-4">
+                    <input name="password" type="password" class="form-control" id="password"
+                           placeholder="{{ __('messages.user.password') }}"
+                           value="{{ Cookie::get('password') !== null ? Cookie::get('password') : null }}"
+                           required>
+                    <label for="password">{{ __('auth.password') }}</label>
+                </div>
+
+                <div class="d-flex justify-content-between mb-sm-7 mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember_me" name="remember" checked>
+                        <label class="form-check-label" for="remember_me">{{ __('auth.remember_me') }}</label>
                     </div>
-                    <input name="password" type="password" class="form-control" id="password" required
-                        placeholder="{{ __('messages.user.password') }}"
-                        value="{{ Cookie::get('password') !== null ? Cookie::get('password') : null }}">
+                    <a href="{{ url('/password/reset') }}" class="auth-link">
+                        {{ __('auth.login.forgot_password') . '?' }}
+                    </a>
                 </div>
-                <div class="mb-sm-7 mb-4 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember" checked>
-                    <label class="form-check-label" for="remember_me">{{ __('auth.remember_me') }}</label>
-                </div>
-                <div class="d-grid" data-turbo="false">
-                    <button type="submit" class="btn btn-primary">{{ __('auth.login.login') }}</button>
-                </div>
-                <div class="d-flex align-items-center mb-10 mt-4">
+
+                <button type="submit" class="btn btn-primary auth-submit-btn">
+                    {{ __('auth.login.login') }}
+                </button>
+
+                <div class="d-flex align-items-center justify-content-center mt-4">
                     <span class="text-gray-700 me-2">{{ __('auth.new_here') }}</span>
-                    <a href="{{ route('register') }}" class="link-info fs-6 text-decoration-none">
+                    <a href="{{ route('register') }}" class="auth-link">
                         {{ __('auth.create_an_account') }}
                     </a>
                 </div>
             </form>
+
         </div>
     </div>
 @endsection

@@ -1184,3 +1184,302 @@ class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('live-con
         </a>
     </li> --}}
 @endrole
+
+<style>
+    /* Base styles */
+    .sidebar-menu {
+        height: calc(100vh - 140px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 1rem;
+    }
+
+    /* Scrollbar styles */
+    .sidebar-menu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 3px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb {
+        background: rgba(101, 113, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb:hover {
+        background: rgba(101, 113, 255, 0.5);
+    }
+
+    /* Navigation item styles */
+    .nav-item {
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        margin: 4px 0;
+    }
+
+    .nav-item .nav-link {
+        color: #6c757d;
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 10px 16px !important;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Hover state */
+    .nav-item .nav-link:hover {
+        color: #6571ff;
+        background-color: rgba(101, 113, 255, 0.1);
+        transform: translateX(5px);
+    }
+
+    /* Active state */
+    .nav-item .nav-link.active,
+    .nav-item .nav-link.active:hover {
+        color: #fff !important;
+        background: linear-gradient(118deg, #6571ff, #7c85ff) !important;
+        box-shadow: 0 2px 10px rgba(101, 113, 255, 0.5) !important;
+        transform: translateX(5px);
+    }
+
+    /* Hidden items */
+    .nav-item.d-none {
+        opacity: 0;
+        transform: translateX(-10px);
+        pointer-events: none;
+        position: absolute;
+    }
+
+    /* Position styles */
+    .position-relative {
+        position: relative;
+    }
+
+    .position-relative::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(108, 117, 125, 0.1);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .position-relative:hover::after {
+        transform: scaleX(1);
+    }
+
+    /* Menu toggle button */
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1001;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 991.98px) {
+        .navbar-search-container {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+        
+        .search-control {
+            width: 100%;
+        }
+        
+        .sidebar-menu {
+            height: 100vh;
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 280px;
+            background: #fff;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding-top: 4rem;
+        }
+        
+        .sidebar-menu.active {
+            left: 0;
+        }
+        
+        .menu-toggle {
+            display: block;
+        }
+        
+        /* Overlay when menu is active */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        .sidebar-overlay.active {
+            display: block;
+        }
+    }
+
+    /* Animation keyframes */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Apply animation to visible menu items */
+    .nav-item:not(.d-none) {
+        animation: slideIn 0.3s ease forwards;
+    }
+
+    /* Update the existing navbar styles */
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-search-container {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+      margin: 0 1rem;
+    }
+
+    .search-control {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #e2e8f0;
+      background-color: #f8fafc;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 991.98px) {
+      .navbar-container {
+        flex-wrap: wrap;
+      }
+      
+      .navbar-brand {
+        flex: 0 0 auto;
+      }
+      
+      .navbar-search-container {
+        order: 3;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 1rem 0 0;
+      }
+      
+      .menu-toggle {
+        display: block;
+        order: 2;
+      }
+    }
+
+    /* Mobile menu styles */
+    .sidebar-menu {
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        background: #fff;
+        transform: translateX(-100%);
+        z-index: 1000;
+        overflow-y: auto;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      }
+
+      .sidebar-menu.active {
+        transform: translateX(0);
+      }
+      
+      body.menu-open {
+        overflow: hidden;
+      }
+      
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+      
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+</style>
+
+<script>
+    // Add this JavaScript to handle mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebarMenu = document.querySelector('.sidebar-menu');
+        const overlay = document.createElement('div');
+        overlay.classList.add('sidebar-overlay');
+        document.body.appendChild(overlay);
+
+        menuToggle?.addEventListener('click', function() {
+            sidebarMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebarMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        overlay.addEventListener('click', function() {
+            sidebarMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+</script>

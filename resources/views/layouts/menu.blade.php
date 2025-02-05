@@ -109,61 +109,7 @@
         </li>
     @endif
 
-    {{-- Billing --}}
-    <?php
-    $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);
-    ?>
-    @if ($billingMGT)
-        <li
-            class="nav-item  {{ Request::is('manual-billing-payments*', 'accounts*', 'employee-payrolls*', 'invoices*', 'payments*', 'payment-reports*', 'advanced-payments*', 'bills*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $billingMGT }}">
-                <span class="aside-menu-icon me-3"><i class="fas fa-file-invoice-dollar"></i></span>
-                <span class="aside-menu-title">{{ __('messages.billing') }}</span>
-                <span class="d-none">{{ __('messages.accountant.accountants') }}</span>
-                <span class="d-none">{{ __('messages.employee_payrolls') }}</span>
-                <span class="d-none">{{ __('messages.invoices') }}</span>
-                <span class="d-none">{{ __('messages.payments') }}</span>
-                <span class="d-none">{{ __('messages.payment_reports') }}</span>
-                <span class="d-none">{{ __('messages.advanced_payments') }}</span>
-                <span class="d-none">{{ __('messages.bills') }}</span>
-                <span class="d-none">{{ __('messages.bill.manual_bill') }}</span>
-            </a>
-        </li>
-    @endif
 
-    <?php
-    $bedMGT = getMenuLinks(\App\Models\User::MAIN_BED_MGT);
-    ?>
-    @if ($bedMGT)
-        {{-- Bed Management  --}}
-        <li
-            class="nav-item  {{ Request::is('bed-types*', 'beds*', 'bed-assigns*', 'bulk-beds', 'bed-status') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ route('bed-status') }}">
-                <span class="aside-menu-icon me-3"><i class="fas fa-bed"></i></span>
-                <span class="aside-menu-title">{{ __('messages.bed_management') }}</span>
-                <span class="d-none">{{ __('messages.bed_types') }}</span>
-                <span class="d-none">{{ __('messages.beds') }}</span>
-                <span class="d-none">{{ __('messages.bed_assigns') }}</span>
-            </a>
-        </li>
-    @endif
-
-    {{-- Blood Bank dropdown --}}
-    <?php
-    $bloodbankMGT = getMenuLinks(\App\Models\User::MAIN_BLOOD_BANK_MGT);
-    ?>
-    @if ($bloodbankMGT)
-        <li
-            class="nav-item  {{ Request::is('blood-banks*', 'blood-donors*', 'blood-donations*', 'blood-issues*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $bloodbankMGT }}">
-                <span class="aside-menu-icon me-3"><i class="fas fa-tint"></i></span>
-                <span class="aside-menu-title">{{ __('messages.blood_bank') }}</span>
-                <span class="d-none">{{ __('messages.blood_donors') }}</span>
-                <span class="d-none">{{ __('messages.blood_donations') }}</span>
-                <span class="d-none">{{ __('messages.blood_issues') }}</span>
-            </a>
-        </li>
-    @endif
 
     {{-- Documents Mgt --}}
     <?php
@@ -229,15 +175,6 @@
         </li>
     @endif
 
-    {{-- Enquiries --}}
-    @module('Enquires', $modules)
-        <li class="nav-item  {{ Request::is('enquiries*') || Request::is('enquiry*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ route('enquiries') }}">
-                <span class="aside-menu-icon me-3"><i class="fas fa-question-circle"></i></span>
-                <span class="aside-menu-title">{{ __('messages.enquiries') }}</span>
-            </a>
-        </li>
-    @endmodule
 
     {{-- Finance --}}
     <?php
@@ -254,51 +191,8 @@
         </li>
     @endif
 
-    {{-- Front office --}}
-    <?php
-    $frontOfficeMGT = getMenuLinks(\App\Models\User::MAIN_FRONT_OFFICE);
-    ?>
-    @if ($frontOfficeMGT)
-        <li class="nav-item  {{ Request::is('call-logs*', 'visitor*', 'receives*', 'dispatches*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $frontOfficeMGT }}">
-                <span class="aside-menu-icon me-3"><i class="fa fa-dungeon"></i></span>
-                <span class="aside-menu-title">{{ __('messages.front_office') }}</span>
-                <span class="d-none">{{ __('messages.call_logs') }}</span>
-                <span class="d-none">{{ __('messages.visitors') }}</span>
-                <span class="d-none">{{ __('messages.postal_receive') }}</span>
-                <span class="d-none">{{ __('messages.postal_dispatch') }}</span>
-            </a>
-        </li>
-    @endif
 
-    {{-- Front settings --}}
-    <li
-        class="nav-item {{ Request::is('front-settings*', 'notice-boards*', 'testimonials*', 'front-cms-services*') ? 'active' : '' }}">
-        <a class="nav-link  d-flex align-items-center py-3" href="{{ route('front.settings.index') }}">
-            <span class="aside-menu-icon me-3"><i class="fas fa fa-cog"></i></span>
-            <span class="aside-menu-title">{{ __('messages.front_cms') }}</span>
-            <span class="d-none">{{ __('messages.notice_boards') }}</span>
-            <span class="d-none">{{ __('messages.testimonials') }}</span>
-            <span class="d-none">{{ __('messages.cms') }}</span>
-            <span class="d-none">{{ __('messages.front_cms_services') }}</span>
-        </a>
-    </li>
 
-    {{-- Hospital Charges --}}
-    <?php
-    $hospitalCharge = getMenuLinks(\App\Models\User::MAIN_HOSPITAL_CHARGE);
-    ?>
-    @if ($hospitalCharge)
-        <li class="nav-item  {{ Request::is('charge-categories*', 'charges*', 'doctor-opd-charges*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $hospitalCharge }}">
-                <span class="aside-menu-icon me-3"><i class="fas fa-coins"></i></span>
-                <span class="aside-menu-title">{{ __('messages.hospital_charges') }}</span>
-                <span class="d-none">{{ __('messages.charge_categories') }}</span>
-                <span class="d-none">{{ __('messages.charges') }}</span>
-                <span class="d-none">{{ __('messages.doctor_opd_charges') }}</span>
-            </a>
-        </li>
-    @endif
 
     {{-- Inventory Management  --}}
     <?php
@@ -318,19 +212,7 @@
         </li>
     @endif
 
-    {{-- Live Consultation --}}
-    <?php
-    $liveConsultation = getMenuLinks(\App\Models\User::MAIN_LIVE_CONSULATION);
-    ?>
-    @if ($liveConsultation)
-        <li class="nav-item  {{ Request::is('live-consultation*', 'live-meeting*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $liveConsultation }}">
-                <span class="aside-menu-icon me-3"><i class="fa fa-video"></i></span>
-                <span class="aside-menu-title">{{ __('messages.live_consultations') }}</span>
-                <span class="d-none">{{ __('messages.live_meetings') }}</span>
-            </a>
-        </li>
-    @endif
+  
 
     {{-- Medicines dropdown --}}
     <?php
@@ -370,21 +252,6 @@
         </li>
     @endif
 
-    {{-- Pathology --}}
-    <?php
-    $pathologyMgt = getMenuLinks(\App\Models\User::MAIN_PATHOLOGY);
-    ?>
-    @if ($pathologyMgt)
-        <li
-            class="nav-item  {{ Request::is('pathology-categories*', 'pathology-tests*', 'pathology-units*', 'pathology-parameters*', 'pathology-tests*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $pathologyMgt }}">
-                <span class="aside-menu-icon me-3"><i class="fa fa-flask"></i></span>
-                <span class="aside-menu-title">{{ __('messages.pathologies') }}</span>
-                <span class="d-none">{{ __('messages.pathology_categories') }}</span>
-                <span class="d-none">{{ __('messages.pathology_tests') }}</span>
-            </a>
-        </li>
-    @endif
 
     {{-- Hospital Activities dropdown --}}
     <?php
@@ -404,20 +271,7 @@
         </li>
     @endif
 
-    {{-- Medicines dropdown --}}
-    <?php
-    $radiology = getMenuLinks(\App\Models\User::MAIN_RADIOLOGY);
-    ?>
-    @if ($radiology)
-        <li class="nav-item {{ Request::is('radiology-categories*', 'radiology-tests*') ? 'active' : '' }}">
-            <a class="nav-link  d-flex align-items-center py-3" href="{{ $radiology }}">
-                <span class="aside-menu-icon me-3"><i class="fa fa-x-ray"></i></span>
-                <span class="aside-menu-title">{{ __('messages.radiologies') }}</span>
-                <span class="d-none">{{ __('messages.radiology_categories') }}</span>
-                <span class="d-none">{{ __('messages.radiology_tests') }}</span>
-            </a>
-        </li>
-    @endif
+  
 
     {{-- Services dropdown --}}
     <?php
@@ -1134,21 +988,7 @@
         @endrole
 
         @role('Nurse')
-            {{-- Bed Manager --}}
-            <?php $bedNurseMGT = getMenuLinks(\App\Models\User::MAIN_BED_MGT);
-            ?>
-            @if ($bedNurseMGT)
-                <li
-                    class="nav-item  {{ Request::is('bed-types*', 'beds*', 'bed-assigns*', 'bulk-beds','bed-status*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ $bedNurseMGT }}">
-                        <span class="aside-menu-icon me-3"><i class="nav-icon fas fa-bed"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.bed_management') }}</span>
-                        <span class="d-none">{{ __('messages.bed_types') }}</span>
-                        <span class="d-none">{{ __('messages.beds') }}</span>
-                        <span class="d-none">{{ __('messages.bed_assigns') }}</span>
-                    </a>
-                </li>
-            @endif
+          
 
             <?php
             $ipd = getMenuLinks(\App\Models\User::MAIN_IPD);
@@ -1193,25 +1033,9 @@
                 </li>
             @endmodule
 
-            {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
-                <li class="nav-item {{ Request::is('live-meeting*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
-                        <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
-                    </a>
-                </li>
-            @endmodule
+          
 
-            {{-- My Payrolls --}}
-            @module('My Payrolls', $modules)
-                <li class="nav-item  {{ Request::is('employee/payroll*', 'employee-payroll*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
-                        <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
-                    </a>
-                </li>
-            @endmodule
+            
 
             {{-- Medicines --}}
             <?php
