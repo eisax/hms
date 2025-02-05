@@ -1035,15 +1035,7 @@
 
           
 
-            {{-- My Payrolls --}}
-            @module('My Payrolls', $modules)
-                <li class="nav-item  {{ Request::is('employee/payroll*', 'employee-payroll*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
-                        <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
-                    </a>
-                </li>
-            @endmodule
+            
 
             {{-- Medicines --}}
             <?php
