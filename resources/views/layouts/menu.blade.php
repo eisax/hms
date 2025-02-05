@@ -1033,15 +1033,7 @@
                 </li>
             @endmodule
 
-            {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
-                <li class="nav-item {{ Request::is('live-meeting*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
-                        <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
-                    </a>
-                </li>
-            @endmodule
+          
 
             {{-- My Payrolls --}}
             @module('My Payrolls', $modules)
