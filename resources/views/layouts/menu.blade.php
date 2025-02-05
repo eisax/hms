@@ -988,21 +988,7 @@
         @endrole
 
         @role('Nurse')
-            {{-- Bed Manager --}}
-            <?php $bedNurseMGT = getMenuLinks(\App\Models\User::MAIN_BED_MGT);
-            ?>
-            @if ($bedNurseMGT)
-                <li
-                    class="nav-item  {{ Request::is('bed-types*', 'beds*', 'bed-assigns*', 'bulk-beds','bed-status*') ? 'active' : '' }}">
-                    <a class="nav-link  d-flex align-items-center py-3" href="{{ $bedNurseMGT }}">
-                        <span class="aside-menu-icon me-3"><i class="nav-icon fas fa-bed"></i></span>
-                        <span class="aside-menu-title">{{ __('messages.bed_management') }}</span>
-                        <span class="d-none">{{ __('messages.bed_types') }}</span>
-                        <span class="d-none">{{ __('messages.beds') }}</span>
-                        <span class="d-none">{{ __('messages.bed_assigns') }}</span>
-                    </a>
-                </li>
-            @endif
+          
 
             <?php
             $ipd = getMenuLinks(\App\Models\User::MAIN_IPD);
