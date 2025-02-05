@@ -2,36 +2,38 @@
 @php
     $settingValue = getSettingValue();
 @endphp
-<div class="aside-menu-container" id="sidebar">
-    <!--begin::Brand-->
-    <div class="aside-menu-container__aside-logo flex-column-auto">
-        <a data-turbo="false" href="{{ url('/') }}" data-toggle="tooltip" data-placement="right"
-            class="text-decoration-none sidebar-logo" title="{{ getAppName() }}" target="_blank">
-            <img src="{{ asset($settingValue['app_logo']['value']) }}" alt="Logo" width="50px" height="50px"
-                class="image" />
-            <span class="navbar-brand-name text-dark text-decoration-none logo ps-2">{{ getAppName() }}</span>
-        </a>
-
-        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn">
-            <i class="fa-solid fa-bars fs-1"></i>
-        </button>
-
-    </div>
-    <!--end::Brand-->
-    <form class="d-flex position-relative aside-menu-container__aside-search search-control py-3 mt-1">
-        <div class="position-relative w-100 sidebar-search-box">
-            <input class="form-control" type="text" placeholder="{{ __('messages.common.search') }}" id="menuSearch"
-                aria-label="Search">
-            <span class="aside-menu-container__search-icon position-absolute d-flex align-items-center top-0 bottom-0">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
+<div class="aside-menu-container shadow-lg" id="sidebar">
+    <div class="aside-menu-container__aside-logo p-3 border-bottom">
+        <div class="d-flex align-items-center justify-content-between">
+            <a data-turbo="false" href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none" 
+               data-toggle="tooltip" data-placement="right" title="{{ getAppName() }}" target="_blank">
+                <img src="{{ asset($settingValue['app_logo']['value']) }}" 
+                     alt="Logo" class="rounded-circle" width="40" height="40"/>
+                <span class="ms-3 fw-bold text-primary">{{ getAppName() }}</span>
+            </a>
+            <button type="button" class="btn btn-link text-dark p-0 d-lg-block d-none sidebar-btn">
+                <i class="fa-solid fa-bars-staggered fs-4"></i>
+            </button>
         </div>
-    </form>
-    <div class="no-record text-dark text-center d-none">{{ __('messages.no_matching_records_found') }}</div>
-    <div class="sidebar-scrolling overflow-auto">
-        <ul class="aside-menu-container__aside-menu nav flex-column">
+    </div>
+
+    <div class="p-3">
+        <div class="position-relative">
+            <input class="form-control bg-light border-0 rounded-pill" type="text" 
+                   placeholder="{{ __('messages.common.search') }}" id="menuSearch">
+            <i class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y end-0 me-3 text-muted"></i>
+        </div>
+    </div>
+
+    <div class="no-record text-muted text-center mt-2 d-none">
+        {{ __('messages.no_matching_records_found') }}
+    </div>
+
+    <div class="sidebar-menu overflow-auto">
+        <ul class="nav flex-column">
             @include('layouts.menu')
         </ul>
     </div>
 </div>
-<div class="bg-overlay" id="sidebar-overly"></div>
+
+<div class="sidebar-overlay" id="sidebar-overly"></div>
