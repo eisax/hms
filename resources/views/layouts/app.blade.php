@@ -14,6 +14,7 @@
     @endphp
     <link rel="icon" href="{{ $settingValue['favicon']['value'] }}" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="{{ asset('assets/css/third-party.css') }}" rel="stylesheet" type="text/css" />
     @if (getLoggedInUser()->thememode)
         <link href="{{ mix('assets/css/style.dark.css') }}" rel="stylesheet" type="text/css" />
