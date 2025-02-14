@@ -2,6 +2,7 @@
 @php
     $settingValue = getSettingValue();
 @endphp
+<link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css"/>
 <div class="aside-menu-container" id="sidebar">
     <!--begin::Brand-->
     <div class="aside-menu-container__aside-logo flex-column-auto">

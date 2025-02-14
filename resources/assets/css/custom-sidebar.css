@@ -1,0 +1,170 @@
+/* Modern Sidebar Base */
+.aside-menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modern Logo Section */
+.sidebar-logo {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    background: linear-gradient(to right, #ffffff, #f8fafc);
+}
+
+/* Modern Search Input */
+.search-input {
+    margin: 1.5rem;
+    padding: 0.875rem 1.25rem;
+    width: calc(100% - 3rem);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+    font-size: 0.925rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #6571ff;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(101, 113, 255, 0.15);
+}
+
+/* Modern Navigation Items */
+.nav-item {
+    margin: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.25rem;
+    color: #64748b;
+    font-weight: 500;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+/* Modern Active State */
+.nav-item.active {
+    background: linear-gradient(135deg, #6571ff 0%, #7c85ff 100%);
+    box-shadow: 0 4px 12px rgba(101, 113, 255, 0.2);
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 0 4px 4px 0;
+}
+
+.nav-item.active .nav-link {
+    color: #ffffff;
+    font-weight: 600;
+    padding-left: 1.5rem;
+}
+
+/* Modern Hover Effects */
+.nav-item:not(.active):hover {
+    background: rgba(101, 113, 255, 0.08);
+    transform: translateX(8px);
+}
+
+.nav-item:not(.active):hover .nav-link {
+    color: #6571ff;
+}
+
+/* Modern Icons Styling */
+.nav-link svg,
+.nav-link i {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover .nav-link svg,
+.nav-item:hover .nav-link i {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Modern Submenu Styles */
+.submenu-wrapper {
+    --primary-color: #6571ff;
+    --hover-color: #7c85ff;
+    --text-color: #6c757d;
+    --active-text: #ffffff;
+    --bg-hover: rgba(101, 113, 255, 0.1);
+    --shadow-color: rgba(101, 113, 255, 0.2);
+}
+
+.nav-item .submenu {
+    position: absolute;
+    min-width: 220px;
+    padding: 0.75rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Modern Responsive Design */
+@media (max-width: 1024px) {
+    .aside-menu-container {
+        transform: translateX(-100%);
+    }
+    
+    .aside-menu-container.active {
+        transform: translateX(0);
+    }
+}
+
+.sidebar-scrolling {
+    height: calc(100vh - 180px);
+}
+
+.nav-item {
+    @apply transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl;
+}
+
+.nav-link {
+    @apply flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl;
+}
+
+.nav-item.active {
+    @apply bg-gradient-to-r from-indigo-100 to-indigo-50 border-l-4 border-indigo-500;
+}
+
+.nav-item.active .nav-link {
+    @apply text-indigo-700 font-semibold;
+}

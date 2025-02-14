@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OpdPrescriptionItem extends Model
 {
+    use HasFactory;
 
     public $table = 'opd_prescription_items';
 

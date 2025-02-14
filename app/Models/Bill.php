@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 use Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Bill
@@ -57,6 +58,8 @@ use Str;
  */
 class Bill extends Model
 {
+    use HasFactory;
+
     public $table = 'bills';
 
     public $fillable = [

@@ -1,11 +1,14 @@
 <div class="ms-0 ms-md-2" wire:ignore>
     <div class="dropdown d-flex align-items-center me-4 me-md-5">
         <button
-                class="btn btn btn-icon btn-primary text-white dropdown-toggle hide-arrow ps-2 pe-0"
-                type="button"  data-bs-auto-close="outside"
-                data-bs-toggle="dropdown" aria-expanded="false"
+                class="btn btn-primary rounded-pill px-4 py-2 d-flex align-items-center gap-2"
+                type="button"  
+                data-bs-auto-close="outside"
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
                 id="userFilterButton">
             <i class='fas fa-filter'></i>
+            {{__('messages.common.filter')}}
         </button>
         <div class="dropdown-menu py-0" aria-labelledby="userFilterButton">
             <div class="text-start border-bottom py-4 px-7">
@@ -23,7 +26,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="reset" class="btn btn-secondary" id="userResetFilter">
+                    <button type="reset" class="btn btn-secondary rounded-pill px-4" id="userResetFilter">
                         {{ __('messages.common.reset') }}
                     </button>
                 </div>

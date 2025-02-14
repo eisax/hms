@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Prescription
@@ -89,6 +90,8 @@ use Illuminate\Support\Facades\Storage;
  */
 class Prescription extends Model
 {
+    use HasFactory;
+
     public $table = 'prescriptions';
 
     public $fillable = [

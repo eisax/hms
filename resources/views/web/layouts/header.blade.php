@@ -7,7 +7,7 @@
         <div class="row align-items-center">
             <div class="col-lg-1 col-4">
                 <a href="{{ url('/') }}" class="header-logo">
-                    <img src="{{asset(getLogoUrl()) }}" alt="Infy HMS" class="img-fluid" />
+                    <img src="{{asset(getLogoUrl()) }}" alt="DBHMS" class="img-fluid" />
                 </a>
             </div>
             <div class="col-lg-11 col-8 ps-0">
@@ -119,7 +119,7 @@
                                     </a>
                                 @endrole
                                 @role('Nurse')
-                                    <a href="{{ url('bed-types') }}"
+                                    <a href="{{ route('patients.index') }}"
                                        data-turbo="false"
                                        class="btn btn-success me-2 mb-3 mb-xl-0">{{ __('messages.dashboard.dashboard') }}
                                     </a>

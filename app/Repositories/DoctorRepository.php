@@ -45,7 +45,11 @@ class DoctorRepository extends BaseRepository
             $input['password'] = Hash::make($input['password']);
             $input['language'] = $settings ['default_lang'];
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
-            $user = User::create(Arr::except($input, ['specialist', 'doctor_department_id']));
+            $user = User::create(Arr::except($input, [
+                'specialist',
+                'doctor_department_id',
+                'description'
+            ]));
 
             if ($mail) {
                 $user->sendEmailVerificationNotification();
@@ -59,7 +63,7 @@ class DoctorRepository extends BaseRepository
                 'user_id' => $user->id,
                 'doctor_department_id' => $input['doctor_department_id'],
                 'specialist' => $input['specialist'],
-                'description' => $input['description'],
+                'description' => $input['description'] ?? '',
                 'appointment_charge' => $input['appointment_charge'] ?? 0,
             ]);
 

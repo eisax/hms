@@ -877,7 +877,7 @@
                 </li>
             @endmodule
         @endrole
-        @role('Admin|Doctor|Patient')
+        {{-- @role('Admin|Doctor|Patient')
             @module('Live Consultations', $modules)
                 <li
                     class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('live-consultation*', 'live-meeting*','google-meet*') ? 'd-none' : '' }}">
@@ -887,8 +887,8 @@
                     </a>
                 </li>
             @endmodule
-        @endrole
-        @role('Admin|Doctor|Accountant|Case Manager|Receptionist|Pharmacist|Lab Technician|Nurse')
+        @endrole --}}
+        {{-- @role('Admin|Doctor|Accountant|Case Manager|Receptionist|Pharmacist|Lab Technician')
             @module('Live Meetings', $modules)
                 <li
                     class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0  {{ !Request::is('live-consultation*', 'live-meeting*','google-meet*') ? 'd-none' : '' }}">
@@ -898,7 +898,7 @@
                     </a>
                 </li>
             @endmodule
-        @endrole
+        @endrole --}}
         @php($sectionName = Request::get('section') === null && !Request::is('hospital-schedules') && !Request::is('currency-settings') && !Request::is('operation-categories') && !Request::is('operations') && !Request::is('payment-gateways') &&  !Request::is('add-custom-fields')? 'general' : Request::get('section'))
         <li
             class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0  {{ Request::is('settings*', 'currency-settings*', 'hospital-schedules', 'operation-categories*', 'operations*', 'payment-gateways*','add-custom-fields*') ? '' : 'd-none' }}">
@@ -1017,7 +1017,7 @@
                 </li>
             @endmodule
         @endrole
-        @role('Doctor|Accountant|Case Manager|Receptionist|Pharmacist|Lab Technician|Nurse')
+        {{-- @role('Doctor|Accountant|Case Manager|Receptionist|Pharmacist|Lab Technician')
             @module('My Payrolls', $modules)
                 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('employee/payroll*') ? 'd-none' : '' }}">
                     <a class="nav-link p-0 {{ Request::is('employee/payroll*') ? 'active' : '' }}" href="{{ route('payroll') }}">
@@ -1025,7 +1025,7 @@
                     </a>
                 </li>
             @endmodule
-        @endrole
+        @endrole --}}
         @role('Patient')
             <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('patient-dashboard*') ? 'd-none' : '' }}">
                 <a class="nav-link p-0 {{ Request::is('patient-dashboard*') ? 'active' : '' }}" href="{{ route('patient.dashboard') }}">
@@ -1184,3 +1184,102 @@ class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('live-con
         </a>
     </li> --}}
 @endrole
+
+<style>
+/* Modern Navigation Container */
+.nav-container {
+    padding: 1rem;
+    background: var(--white-color);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Modern Nav Items */
+.nav-item {
+    position: relative;
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.nav-item:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
+/* Modern Nav Links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.25rem;
+    color: var(--paragraph-color);
+    font-weight: 500;
+    border-radius: 0.625rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+/* Active State */
+.nav-link.active {
+    background: linear-gradient(135deg, var(--main-color) 0%, #2eaafc 100%);
+    color: var(--white-color);
+    box-shadow: 0 4px 12px rgba(22, 159, 237, 0.2);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Hover Effects */
+.nav-link:hover:not(.active) {
+    background: linear-gradient(to right, #f8fafc, #f1f5f9);
+    color: var(--main-color);
+    transform: translateX(3px);
+}
+
+/* Module Sections */
+.module-section {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.module-section:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(226, 232, 240, 0.8), transparent);
+}
+
+/* Role-based styling */
+[class*="role-"] {
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .nav-link {
+        padding: 0.75rem 1rem;
+    }
+    
+    .nav-item {
+        margin: 0.25rem 0;
+    }
+}
+
+/* Dark Theme Support */
+[data-bs-theme="dark"] {
+    .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .nav-link:hover:not(.active) {
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        color: var(--white-color);
+    }
+    
+    .module-section:not(:last-child)::after {
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+}
+</style>

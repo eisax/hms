@@ -114,6 +114,7 @@ use App\Http\Controllers\VaccinationController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\Web;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -455,7 +456,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('doctor-departments/{doctorDepartment}', [DoctorDepartmentController::class, 'show'])->where('doctorDepartment', '[0-9]+');
     });
 
-    Route::middleware('role:Admin|Receptionist|Case Manager')->group(function () {
+    Route::middleware('role:Admin|Receptionist|Case Manager|Nurse')->group(function () {
         Route::get('patient-cases', [PatientCaseController::class, 'index'])
             ->name('patient-cases.index')
             ->middleware('modules');
@@ -473,7 +474,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
             ->middleware('modules');
     });
 
-    Route::middleware('role:Admin|Receptionist|Case Manager|Doctor')->group(function () {
+    Route::middleware('role:Admin|Receptionist|Case Manager')->group(function () {
         Route::resource('charge-categories', ChargeCategoryController::class);
         Route::get('charge-categories', [ChargeCategoryController::class, 'index'])
             ->name('charge-categories.index')
@@ -1257,7 +1258,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('investigation-download/{investigationReport}', [InvestigationReportController::class, 'downloadMedia']);
     });
 
-    Route::middleware('role:Admin|Doctor|Receptionist')->group(function(){
+    Route::middleware('role:Admin|Doctor|Receptionist|Nurse')->group(function(){
         Route::get('ipds/create', [IpdPatientDepartmentController::class, 'create'])->name('ipd.patient.create');
         Route::post('ipds', [IpdPatientDepartmentController::class, 'store'])->name('ipd.patient.store');
         Route::get('ipds/{ipdPatientDepartment}/edit', [IpdPatientDepartmentController::class, 'edit'])->name('ipd.patient.edit');
@@ -1520,3 +1521,35 @@ require __DIR__.'/upgrade.php';
 
 Route::get('zoom/connect', [LiveConsultationController::class, 'zoomConnect'])->name('zoom.connect');
 Route::any('zoom/callback', [LiveConsultationController::class, 'zoomCallback']);
+
+// Route::get('/test-charts', function () {
+//     return view('test-chart');
+// })->name('test-chart');
+
+// Route::prefix('analytics')->group(function () {
+//     Route::get('diagnosis', [AnalyticsController::class, 'getDiagnosisData'])->name('analytics.diagnosis');
+//     Route::get('patients', [AnalyticsController::class, 'getPatientData'])->name('analytics.patients');
+//     Route::get('income-expense', [AnalyticsController::class, 'getIncomeExpenseData'])->name('analytics.income-expense');
+//     Route::get('medicines', [AnalyticsController::class, 'getMedicineData'])->name('analytics.medicines');
+//     Route::get('all', [AnalyticsController::class, 'getAllData'])->name('analytics.all');
+// });
+
+// Route::get('/analytics/system', [AnalyticsController::class, 'systemAnalytics']);
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/medicine-analytics', function () {
+        return view('analytics.medicine');
+    })->name('medicine.analytics');
+});
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/user-analytics', function () {
+        return view('analytics.user');
+    })->name('user.analytics');
+});
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/income-analytics', function () {
+        return view('analytics.income');
+    })->name('income.analytics');
+});

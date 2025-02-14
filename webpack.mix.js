@@ -846,3 +846,8 @@ mix.js(
 
 mix.js('resources/assets/js/livewire-turbo.js',
     'public/assets/js/livewire-turbo.js')
+
+mix.js('resources/js/app.js', 'public/js')
+   .postCss('resources/css/app.css', 'public/css', [
+       require('tailwindcss'),
+   ]);

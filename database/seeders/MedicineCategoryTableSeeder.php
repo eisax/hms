@@ -33,6 +33,46 @@ class MedicineCategoryTableSeeder extends Seeder
                 'name' => 'Antiseptics',
                 'is_active' => 1,
             ],
+            [
+                'name' => 'Antihistamines',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antacids',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Diuretics',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antidepressants',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Anticoagulants',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antidiabetics',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Corticosteroids',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antifungals',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antispasmodics',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Antivirals',
+                'is_active' => 1,
+            ],
         ];
 
         foreach ($input as $data) {

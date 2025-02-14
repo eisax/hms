@@ -337,6 +337,36 @@
                 </a>
             </li>
         @endif
+
+        {{-- Medicine Analytics --}}
+        <li class="nav-item {{ Request::is('medicine-analytics*') ? 'active' : '' }}">
+            <a class="nav-link d-flex align-items-center py-3" href="{{ route('medicine.analytics') }}">
+                <span class="aside-menu-icon me-3">
+                    <i class="fas fa-pills"></i>
+                </span>
+                <span class="aside-menu-title">{{ __('Medicine Analytics') }}</span>
+            </a>
+        </li>
+
+        {{-- User Analytics --}}
+        <li class="nav-item {{ Request::is('user-analytics*') ? 'active' : '' }}">
+            <a class="nav-link d-flex align-items-center py-3" href="{{ route('user.analytics') }}">
+                <span class="aside-menu-icon me-3">
+                    <i class="fas fa-users"></i>
+                </span>
+                <span class="aside-menu-title">{{ __('User Analytics') }}</span>
+            </a>
+        </li>
+
+        {{-- Income Analytics --}}
+        <li class="nav-item {{ Request::is('income-analytics*') ? 'active' : '' }}">
+            <a class="nav-link d-flex align-items-center py-3" href="{{ route('income.analytics') }}">
+                <span class="aside-menu-icon me-3">
+                    <i class="fas fa-dollar-sign"></i>
+                </span>
+                <span class="aside-menu-title">{{ __('Income Analytics') }}</span>
+            </a>
+        </li>
     @endrole
     @if (Auth::user()->email_verified_at != null)
         @role('Doctor')
@@ -348,20 +378,21 @@
                     </a>
                 </li>
             @endmodule
-
+            
             <?php
-            $bedDoctorMGT = getMenuLinks(\App\Models\User::MAIN_DOCTOR_BED_MGT);
-            ?>
-            @if ($bedDoctorMGT)
+            // $bedDoctorMGT = getMenuLinks(\App\Models\User::MAIN_DOCTOR_BED_MGT);
+             ?>
+            {{-- @if ($bedDoctorMGT) --}}
                 {{-- Bed Management --}}
-                <li class="nav-item  {{ Request::is('bed-assigns*','bed-status*') ? 'active' : '' }}">
+                {{-- <li class="nav-item  {{ Request::is('bed-assigns*','bed-status*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ $bedDoctorMGT }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-bed"></i></span>
                         <span class="aside-menu-title">{{ __('messages.bed_management') }}</span>
                         <span class="d-none">{{ __('messages.bed_assigns') }}</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
+            
 
             @module('Doctors', $modules)
                 <li class="nav-item  {{ Request::is('employee/doctor*', 'doctors*') ? 'active' : '' }}">
@@ -467,9 +498,9 @@
 
             {{-- Live Consultation --}}
             <?php
-            $liveConsultation = getMenuLinks(\App\Models\User::MAIN_LIVE_CONSULATION);
+            // $liveConsultation = getMenuLinks(\App\Models\User::MAIN_LIVE_CONSULATION);
             ?>
-            @if ($liveConsultation)
+            {{-- @if ($liveConsultation)
                 <li class="nav-item  {{ Request::is('live-consultation*', 'live-meeting*','google-meet*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ $liveConsultation }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-video"></i></span>
@@ -477,16 +508,17 @@
                         <span class="d-none">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
 
             {{-- My Payrolls --}}
             @module('My Payrolls', $modules)
-                <li class="nav-item {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                     </a>
-                </li>
+                </li> --}}
+                
 
                 {{-- Patients --}}
                 <?php
@@ -554,23 +586,23 @@
                 </li>
 
                 {{-- Live Meeting --}}
-                @module('Live Meetings', $modules)
+                {{-- @module('Live Meetings', $modules)
                     <li class="nav-item  {{ Request::is('live-meeting*') ? 'active' : '' }}">
                         <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                             <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
                             <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
                         </a>
                     </li>
-                @endmodule
+                @endmodule --}}
 
-                @module('My Payrolls', $modules)
+                {{-- @module('My Payrolls', $modules)
                     <li class="nav-item  {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
                         <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                             <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                             <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                         </a>
                     </li>
-                @endmodule
+                @endmodule --}}
 
                 {{-- Patient admissions and Cases --}}
                 <?php
@@ -778,7 +810,7 @@
             @endif
 
             {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
+            {{-- @module('Live Meetings', $modules)
                 <li class="nav-item  {{ Request::is('live-meeting*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
@@ -786,16 +818,16 @@
                         <span class="d-none">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
-            @module('My Payrolls', $modules)
+            {{-- @module('My Payrolls', $modules)
                 <li class="nav-item {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Cases Mgt --}}
             <?php
@@ -923,14 +955,14 @@
             @endmodule
 
             {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
+            {{-- @module('Live Meetings', $modules)
                 <li class="nav-item  {{ Request::is('live-meeting*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
                         <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Medicines --}}
             <?php
@@ -948,14 +980,14 @@
                 </li>
             @endif
 
-            @module('My Payrolls', $modules)
+            {{-- @module('My Payrolls', $modules)
                 <li class="nav-item {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             @module('Pathology Tests', $modules)
                 <li class="nav-item  {{ Request::is('pathology-tests*') ? 'active' : '' }}">
@@ -989,9 +1021,10 @@
 
         @role('Nurse')
             {{-- Bed Manager --}}
-            <?php $bedNurseMGT = getMenuLinks(\App\Models\User::MAIN_BED_MGT);
+            <?php
+            //  $bedNurseMGT = getMenuLinks(\App\Models\User::MAIN_BED_MGT);
             ?>
-            @if ($bedNurseMGT)
+            {{-- @if ($bedNurseMGT)
                 <li
                     class="nav-item  {{ Request::is('bed-types*', 'beds*', 'bed-assigns*', 'bulk-beds','bed-status*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ $bedNurseMGT }}">
@@ -1002,7 +1035,7 @@
                         <span class="d-none">{{ __('messages.bed_assigns') }}</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
 
             <?php
             $ipd = getMenuLinks(\App\Models\User::MAIN_IPD);
@@ -1048,24 +1081,24 @@
             @endmodule
 
             {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
+            {{-- @module('Live Meetings', $modules)
                 <li class="nav-item {{ Request::is('live-meeting*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
                         <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- My Payrolls --}}
-            @module('My Payrolls', $modules)
+            {{-- @module('My Payrolls', $modules)
                 <li class="nav-item  {{ Request::is('employee/payroll*', 'employee-payroll*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Medicines --}}
             <?php
@@ -1205,14 +1238,14 @@
             @endmodule
 
             {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
+            {{-- @module('Live Meetings', $modules)
                 <li class="nav-item  {{ Request::is('live-meeting*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
                         <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Medicines --}}
             <?php
@@ -1231,14 +1264,14 @@
             @endif
 
             {{-- My Payrolls --}}
-            @module('My Payrolls', $modules)
+            {{-- @module('My Payrolls', $modules)
                 <li class="nav-item {{ Request::is('employee/payroll*', 'employee-payrolls*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span class="aside-menu-title">{{ __('messages.my_payrolls') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Pathologies --}}
             @module('Pathology Tests', $modules)
@@ -1309,24 +1342,24 @@
             @endmodule
 
             {{-- Live Meeting --}}
-            @module('Live Meetings', $modules)
+            {{-- @module('Live Meetings', $modules)
                 <li class="nav-item  {{ Request::is('live-meeting*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('live.meeting.index') }}">
                         <span class="aside-menu-icon me-3"><i class="fa fa-file-video"></i></span>
                         <span class="aside-menu-title">{{ __('messages.live_meetings') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- My Payrolls --}}
-            @module('My Payrolls', $modules)
+            {{-- @module('My Payrolls', $modules)
                 <li class="nav-item  {{ Request::is('employee/payroll*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3" href="{{ route('payroll') }}">
                         <span class="aside-menu-icon me-3"><i class="fas fa-chart-pie"></i></span>
                         <span>{{ __('messages.my_payrolls') }}</span>
                     </a>
                 </li>
-            @endmodule
+            @endmodule --}}
 
             {{-- Services --}}
             @module('Services', $modules)
@@ -1506,3 +1539,14 @@
             @endif
         @endrole
     @endif
+
+    @role('Admin|Receptionist|Doctor|Nurse')
+    @module('Patients', $modules)
+    <li class="nav-item {{ Request::is('patients*') ? 'active' : '' }}">
+        <a class="nav-link d-flex align-items-center py-3" href="{{ route('patients.index') }}">
+            <span class="aside-menu-icon me-3"><i class="fas fa-hospital-user"></i></span>
+            <span class="aside-menu-title">{{ __('messages.patients') }}</span>
+        </a>
+    </li>
+    @endmodule
+    @endrole

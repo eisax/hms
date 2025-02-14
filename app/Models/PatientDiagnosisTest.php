@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\PatientDiagnosisTest
@@ -43,6 +44,8 @@ use Illuminate\Support\Facades\Storage;
  */
 class PatientDiagnosisTest extends Model
 {
+    use HasFactory;
+
     protected $table = 'patient_diagnosis_tests';
 
     public $fillable = [

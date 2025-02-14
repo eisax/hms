@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Doctor
@@ -60,6 +61,8 @@ use Illuminate\Support\Carbon;
  */
 class Doctor extends Model
 {
+    use HasFactory;
+
     public $table = 'doctors';
 
     public $fillable = [

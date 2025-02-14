@@ -8,9 +8,6 @@ use Illuminate\Database\Seeder;
 
 class PatientAdmissionTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $input = [
@@ -36,6 +33,17 @@ class PatientAdmissionTableSeeder extends Seeder
                 'bed_id' => 2,
                 'status' => 1,
             ],
+            [
+                'patient_admission_id' => mb_strtoupper(PatientAdmission::generateUniquePatientId()),
+                'patient_id' => 3,
+                'doctor_id' => 3,
+                'admission_date' => Carbon::now()->subDays(2),
+                'discharge_date' => Carbon::now()->addDays(3),
+                'package_id' => 3,
+                'insurance_id' => 3,
+                'bed_id' => 3,
+                'status' => 1,
+            ]
         ];
 
         foreach ($input as $data) {

@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\Medicine
@@ -51,6 +52,8 @@ use Illuminate\Support\Carbon;
  */
 class Medicine extends Model
 {
+    use HasFactory;
+
     public $table = 'medicines';
 
     public $fillable = [

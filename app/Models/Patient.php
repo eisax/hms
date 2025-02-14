@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Patient
  *
@@ -55,6 +56,8 @@ use Illuminate\Support\Str;
  */
 class Patient extends Model
 {
+    use HasFactory;
+
     public $table = 'patients';
 
     public $fillable = [

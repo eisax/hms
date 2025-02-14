@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Appointment
@@ -46,6 +47,8 @@ use Illuminate\Support\Carbon;
  */
 class Appointment extends Model
 {
+    use HasFactory;
+
     public $table = 'appointments';
 
     const STATUS_ARR = [
