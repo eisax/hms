@@ -33,6 +33,10 @@ class CaseHandlerRepository extends BaseRepository
 
     public function store($input, $mail = true)
     {
+        $existingUser = User::whereEmail($input['email'])->first();
+        if ($existingUser) {
+            return;
+        }
         try {
             $input['department_id'] = Department::whereName('Case Manager')->first()->id;
             $input['password'] = Hash::make($input['password']);

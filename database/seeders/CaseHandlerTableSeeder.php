@@ -6,6 +6,9 @@ use App\Repositories\CaseHandlerRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class CaseHandlerTableSeeder extends Seeder
 {
@@ -31,7 +34,7 @@ class CaseHandlerTableSeeder extends Seeder
             [
                 'first_name' => 'Ajay',
                 'last_name' => 'Makwana',
-                'email' => 'ajay@gmail.com',
+                'email' => 'casehandler-' . uniqid() . '-' . Str::slug('Ajay Makwana') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Case Handler',
                 'gender' => 0,
@@ -44,6 +47,13 @@ class CaseHandlerTableSeeder extends Seeder
         foreach ($input as $key => $value) {
             /** @var CaseHandlerRepository $caseHandler */
             $caseHandler = App::make(CaseHandlerRepository::class);
+            $user = User::firstOrCreate(
+                ['email' => $value['email']],
+                [
+                    'password' => Hash::make($value['password']),
+                    ...$value
+                ]
+            );
             $caseHandler->store($input[$key], false);
         }
     }
