@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             return new LangJsCommand($generator);
         });
 
-        if ($this->app->environment('local')) {
+        if ($this->app->environment('local') && class_exists(\Barryvdh\Debugbar\ServiceProvider::class)) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
     }

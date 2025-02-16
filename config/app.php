@@ -180,7 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        \Barryvdh\Debugbar\ServiceProvider::class,
+        // \Barryvdh\Debugbar\ServiceProvider::class,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
