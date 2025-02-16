@@ -6,6 +6,7 @@ use App\Repositories\NurseRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
+use App\Models\User;
 
 class NurseTableSeeder extends Seeder
 {
@@ -130,7 +131,11 @@ class NurseTableSeeder extends Seeder
         foreach ($input as $key => $value) {
             /** @var NurseRepository $nurse */
             $nurse = App::make(NurseRepository::class);
-            $nurse->store($input[$key], false);
+            $user = User::firstOrCreate(
+                ['email' => $value['email']],
+                $value
+            );
+            $nurse->store($value, false);
         }
     }
 }
