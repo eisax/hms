@@ -40,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
             return new LangJsCommand($generator);
         });
+
+        if ($this->app->environment('local')) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 
     /**
