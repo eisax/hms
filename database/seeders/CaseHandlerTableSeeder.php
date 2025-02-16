@@ -42,7 +42,10 @@ class CaseHandlerTableSeeder extends Seeder
                     ...$value
                 ]
             );
-            $caseHandler->store($input[$key], false);
+            
+            if ($user->wasRecentlyCreated) {
+                $caseHandler->store($input[$key], false);
+            }
         }
     }
 }
