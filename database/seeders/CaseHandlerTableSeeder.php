@@ -18,19 +18,7 @@ class CaseHandlerTableSeeder extends Seeder
     public function run(): void
     {
         $input = [
-            /*
-            [
-                'first_name'        => 'Ashish',
-                'last_name'         => 'Nakrani',
-                'email'             => 'ashish@gmail.com',
-                'password'          => '123456',
-                'designation'       => 'Case Handler',
-                'gender'            => 0,
-                'qualification'     => 'LLB',
-                'status'            => 1,
-                'email_verified_at' => Carbon::now(),
-            ],
-            */
+        
             [
                 'first_name' => 'Ajay',
                 'last_name' => 'Makwana',
