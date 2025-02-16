@@ -180,6 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        app()->environment('local') ? Barryvdh\Debugbar\ServiceProvider::class : null,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
