@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class NurseTableSeeder extends Seeder
 {
@@ -19,7 +21,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Farai',
                 'last_name' => 'Moyo',
-                'email' => 'farai.moyo.nurse@example.com',
+                'email' => Str::random(8) . '.farai.moyo.nurse@example.com',
                 'password' => '123456',
                 'designation' => 'Pediatric Nurse',
                 'gender' => 1,
@@ -30,7 +32,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tariro',
                 'last_name' => 'Ndlovu',
-                'email' => 'tariro.nurse@example.com',
+                'email' => Str::random(8) . '.tariro.nurse@example.com',
                 'password' => '123456',
                 'designation' => 'ICU Nurse',
                 'gender' => 1,
@@ -41,7 +43,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tafadzwa',
                 'last_name' => 'Makoni',
-                'email' => 'tafadzwa.nurse@example.com',
+                'email' => Str::random(8) . '.tafadzwa.nurse@example.com',
                 'password' => '123456',
                 'designation' => 'Emergency Nurse',
                 'gender' => 0,
@@ -52,7 +54,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Rumbidzai',
                 'last_name' => 'Chiweshe',
-                'email' => 'rumbidzai.nurse@example.com',
+                'email' => Str::random(8) . '.rumbidzai.nurse@example.com',
                 'password' => '123456',
                 'designation' => 'Maternity Nurse',
                 'gender' => 1,
@@ -63,7 +65,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Kudakwashe',
                 'last_name' => 'Mpofu',
-                'email' => 'kudakwashe.mpofu@example.com',
+                'email' => Str::random(8) . '.kudakwashe.mpofu@example.com',
                 'password' => '123456',
                 'designation' => 'Surgical Nurse',
                 'gender' => 0,
@@ -74,7 +76,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Chenai',
                 'last_name' => 'Sibanda',
-                'email' => 'chenai.nurse@example.com',
+                'email' => Str::random(8) . '.chenai.nurse@example.com',
                 'password' => '123456',
                 'designation' => 'Oncology Nurse',
                 'gender' => 1,
@@ -85,7 +87,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Munyaradzi',
                 'last_name' => 'Mangena',
-                'email' => 'munyaradzi.mangena@example.com',
+                'email' => Str::random(8) . '.munyaradzi.mangena@example.com',
                 'password' => '123456',
                 'designation' => 'Cardiac Nurse',
                 'gender' => 0,
@@ -96,7 +98,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tsitsi',
                 'last_name' => 'Nyoni',
-                'email' => 'tsitsi.nyoni@example.com',
+                'email' => Str::random(8) . '.tsitsi.nyoni@example.com',
                 'password' => '123456',
                 'designation' => 'Community Nurse',
                 'gender' => 1,
@@ -107,7 +109,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tanaka',
                 'last_name' => 'Mabika',
-                'email' => 'tanaka.mabika@example.com',
+                'email' => Str::random(8) . '.tanaka.mabika@example.com',
                 'password' => '123456',
                 'designation' => 'Psychiatric Nurse',
                 'gender' => 0,
@@ -118,7 +120,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Vimbai',
                 'last_name' => 'Gumbo',
-                'email' => 'vimbai.gumbo@example.com',
+                'email' => Str::random(8) . '.vimbai.gumbo@example.com',
                 'password' => '123456',
                 'designation' => 'Neonatal Nurse',
                 'gender' => 1,
@@ -131,11 +133,18 @@ class NurseTableSeeder extends Seeder
         foreach ($input as $key => $value) {
             /** @var NurseRepository $nurse */
             $nurse = App::make(NurseRepository::class);
+            
             $user = User::firstOrCreate(
                 ['email' => $value['email']],
-                $value
+                [
+                    'password' => Hash::make($value['password']),
+                    ...$value
+                ]
             );
-            $nurse->store($value, false);
+            
+            if ($user->wasRecentlyCreated) {
+                $nurse->store($input[$key], false);
+            }
         }
     }
 }
