@@ -44,6 +44,10 @@ class NurseRepository extends BaseRepository
             $input['language'] =$settings['default_lang'];
             $input['phone'] = preparePhoneNumber($input, 'phone');
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
+            $existingUser = User::whereEmail($input['email'])->first();
+            if ($existingUser) {
+                return;
+            }
             $user = User::create($input);
             if ($mail) {
                 $user->sendEmailVerificationNotification();

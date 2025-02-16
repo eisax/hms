@@ -21,7 +21,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Farai',
                 'last_name' => 'Moyo',
-                'email' => Str::random(8) . '.farai.moyo.nurse@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Farai Moyo') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Pediatric Nurse',
                 'gender' => 1,
@@ -32,7 +32,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tariro',
                 'last_name' => 'Ndlovu',
-                'email' => Str::random(8) . '.tariro.nurse@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Tariro Ndlovu') . '@example.com',
                 'password' => '123456',
                 'designation' => 'ICU Nurse',
                 'gender' => 1,
@@ -43,7 +43,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tafadzwa',
                 'last_name' => 'Makoni',
-                'email' => Str::random(8) . '.tafadzwa.nurse@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Tafadzwa Makoni') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Emergency Nurse',
                 'gender' => 0,
@@ -54,7 +54,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Rumbidzai',
                 'last_name' => 'Chiweshe',
-                'email' => Str::random(8) . '.rumbidzai.nurse@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Rumbidzai Chiweshe') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Maternity Nurse',
                 'gender' => 1,
@@ -65,7 +65,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Kudakwashe',
                 'last_name' => 'Mpofu',
-                'email' => Str::random(8) . '.kudakwashe.mpofu@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Kudakwashe Mpofu') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Surgical Nurse',
                 'gender' => 0,
@@ -76,7 +76,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Chenai',
                 'last_name' => 'Sibanda',
-                'email' => Str::random(8) . '.chenai.nurse@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Chenai Sibanda') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Oncology Nurse',
                 'gender' => 1,
@@ -87,7 +87,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Munyaradzi',
                 'last_name' => 'Mangena',
-                'email' => Str::random(8) . '.munyaradzi.mangena@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Munyaradzi Mangena') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Cardiac Nurse',
                 'gender' => 0,
@@ -98,7 +98,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tsitsi',
                 'last_name' => 'Nyoni',
-                'email' => Str::random(8) . '.tsitsi.nyoni@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Tsitsi Nyoni') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Community Nurse',
                 'gender' => 1,
@@ -109,7 +109,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Tanaka',
                 'last_name' => 'Mabika',
-                'email' => Str::random(8) . '.tanaka.mabika@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Tanaka Mabika') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Psychiatric Nurse',
                 'gender' => 0,
@@ -120,7 +120,7 @@ class NurseTableSeeder extends Seeder
             [
                 'first_name' => 'Vimbai',
                 'last_name' => 'Gumbo',
-                'email' => Str::random(8) . '.vimbai.gumbo@example.com',
+                'email' => 'nurse-' . uniqid() . '-' . Str::slug('Vimbai Gumbo') . '@example.com',
                 'password' => '123456',
                 'designation' => 'Neonatal Nurse',
                 'gender' => 1,
