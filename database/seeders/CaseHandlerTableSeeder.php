@@ -44,7 +44,7 @@ class CaseHandlerTableSeeder extends Seeder
             );
             
             if ($user->wasRecentlyCreated) {
-                $caseHandler->store($input[$key], false);
+                $caseHandler->store(['user_id' => $user->id] + $input[$key], false);
             }
         }
     }
