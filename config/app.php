@@ -179,10 +179,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
         Barryvdh\Debugbar\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
