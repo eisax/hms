@@ -122,6 +122,54 @@ class IncomeTableSeeder extends Seeder
                 'description' => 'Receive Canteen Rent income',
 
             ],
+            [
+                'income_head' => 1,
+                'name' => 'Emergency Room Fees',
+                'invoice_number' => 'ERF335',
+                'date' => Carbon::parse(Carbon::now())->addDays(11),
+                'amount' => '11200',
+                'description' => 'Receive Hospital Charges income',
+            ],
+            [
+                'income_head' => 2,
+                'name' => 'Physical Therapy',
+                'invoice_number' => 'PHY772',
+                'date' => Carbon::parse(Carbon::now())->addDays(12),
+                'amount' => '6800',
+                'description' => 'Receive Hospital Charges income',
+            ],
+            [
+                'income_head' => 3,
+                'name' => 'Charity Gala',
+                'invoice_number' => 'CHG449',
+                'date' => Carbon::parse(Carbon::now())->addDays(13),
+                'amount' => '15400',
+                'description' => 'Receive Special Campaign income',
+            ],
+            [
+                'income_head' => 4,
+                'name' => 'Cafeteria Franchise',
+                'invoice_number' => 'CAF882',
+                'date' => Carbon::parse(Carbon::now())->addDays(14),
+                'amount' => '8900',
+                'description' => 'Receive Canteen Rent income',
+            ],
+            [
+                'income_head' => 1,
+                'name' => 'Lab Testing',
+                'invoice_number' => 'LAB551',
+                'date' => Carbon::parse(Carbon::now())->addDays(15),
+                'amount' => '13450',
+                'description' => 'Receive Hospital Charges income',
+            ],
+            [
+                'income_head' => 2,
+                'name' => 'MRI Scans',
+                'invoice_number' => 'MRI309',
+                'date' => Carbon::parse(Carbon::now())->addDays(16),
+                'amount' => '28700',
+                'description' => 'Receive Hospital Charges income',
+            ],
         ];
 
         foreach ($input as $data) {

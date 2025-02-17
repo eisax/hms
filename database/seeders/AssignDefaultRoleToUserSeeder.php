@@ -56,7 +56,7 @@ class AssignDefaultRoleToUserSeeder extends Seeder
         $nursePermissions = Permission::whereIn(
             'name',
             [
-                'manage_beds', 'manage_wards', 'manage_appointments', 'manage_prescriptions', 'manage_patients',
+                'manage_beds', 'manage_wards', 'manage_appointments', 'manage_prescriptions', 'manage_patients', 'manage_admit_history',
                 'manage_blood_bank', 'manage_reports', 'manage_notice_board', 'manage_doctors', 'manage_nurses',
                 'manage_receptionists', 'manage_pharmacists', 'manage_operations_history',
                 'manage_blood_donor', 'manage_medicines', 'manage_department',

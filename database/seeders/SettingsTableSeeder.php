@@ -16,7 +16,7 @@ class SettingsTableSeeder extends Seeder
 
         Setting::create(['key' => 'app_name', 'value' => 'HMS']);
         Setting::create(['key' => 'app_logo', 'value' => $imageUrl]);
-        Setting::create(['key' => 'company_name', 'value' => 'InfyOmLabs']);
+        Setting::create(['key' => 'company_name', 'value' => 'DBHMS']);
         Setting::create(['key' => 'current_currency', 'value' => 'inr']);
         Setting::create(['key' => 'hospital_address', 'value' => '16/A saint Joseph Park']);
         Setting::create(['key' => 'hospital_email', 'value' => 'cityhospital@gmail.com']);

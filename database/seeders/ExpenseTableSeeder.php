@@ -122,6 +122,60 @@ class ExpenseTableSeeder extends Seeder
                 'description' => 'Tea Expense',
 
             ],
+            [
+                'expense_head' => 7,
+                'name' => 'Medical Supplies',
+                'invoice_number' => 'MED789',
+                'date' => Carbon::parse(Carbon::now())->addDays(11),
+                'amount' => '4500',
+                'description' => 'Monthly medical consumables restock',
+
+            ],
+            [
+                'expense_head' => 8,
+                'name' => 'Ambulance Maintenance',
+                'invoice_number' => 'AMB456',
+                'date' => Carbon::parse(Carbon::now())->addDays(12),
+                'amount' => '3200',
+                'description' => 'Vehicle servicing and fuel costs',
+
+            ],
+            [
+                'expense_head' => 9,
+                'name' => 'Staff Training',
+                'invoice_number' => 'TRN123',
+                'date' => Carbon::parse(Carbon::now())->addDays(13),
+                'amount' => '6800',
+                'description' => 'CPR certification renewal for nurses',
+
+            ],
+            [
+                'expense_head' => 10,
+                'name' => 'Patient Meals',
+                'invoice_number' => 'NUT555',
+                'date' => Carbon::parse(Carbon::now())->addDays(14),
+                'amount' => '2850',
+                'description' => 'Weekly food supplies for patients',
+
+            ],
+            [
+                'expense_head' => 11,
+                'name' => 'Laundry Services',
+                'invoice_number' => 'LND333',
+                'date' => Carbon::parse(Carbon::now())->addDays(15),
+                'amount' => '1750',
+                'description' => 'Linens and uniform cleaning',
+
+            ],
+            [
+                'expense_head' => 12,
+                'name' => 'Pharmacy Restock',
+                'invoice_number' => 'PHR999',
+                'date' => Carbon::parse(Carbon::now())->addDays(16),
+                'amount' => '9200',
+                'description' => 'Essential medications purchase',
+
+            ],
         ];
 
         foreach ($input as $data) {

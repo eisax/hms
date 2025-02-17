@@ -34,34 +34,24 @@ class CaseHandlerRepository extends BaseRepository
     public function store($input, $mail = true)
     {
         try {
-            $input['department_id'] = Department::whereName('Case Manager')->first()->id;
-            $input['password'] = Hash::make($input['password']);
-
-            $input['phone'] = preparePhoneNumber($input, 'phone');
-            $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
-            $user = User::create($input);
-
-            if ($mail) {
-                $user->sendEmailVerificationNotification();
+            $existingUser = User::whereEmail($input['email'])->first();
+            if ($existingUser) {
+                return;
             }
 
-            if (isset($input['image']) && ! empty($input['image'])) {
-                $mediaId = storeProfileImage($user, $input['image']);
-            }
-
-            $caseHandler = CaseHandler::create(['user_id' => $user->id]);
+            $caseHandler = CaseHandler::create(['user_id' => $input['user_id']]);
             $ownerId = $caseHandler->id;
             $ownerType = CaseHandler::class;
 
-            if (! empty($address = Address::prepareAddressArray($input))) {
+            if (!empty($address = Address::prepareAddressArray($input))) {
                 Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
             }
 
-            $user->update(['owner_id' => $ownerId, 'owner_type' => $ownerType]);
+            User::whereId($input['user_id'])->update([
+                'owner_id' => $ownerId, 
+                'owner_type' => $ownerType
+            ]);
 
-            $user->assignRole($input['department_id']);
-
-            return true;
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
