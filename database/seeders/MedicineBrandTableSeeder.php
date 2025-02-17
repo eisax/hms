@@ -28,6 +28,24 @@ class MedicineBrandTableSeeder extends Seeder
             [
                 'name' => 'Tolol-H',
             ],
+            [
+                'name' => 'Omeprol',
+            ],
+            [
+                'name' => 'Lisinopress',
+            ],
+            [
+                'name' => 'Amlodipine',
+            ],
+            [
+                'name' => 'Metformax',
+            ],
+            [
+                'name' => 'Cetirizin',
+            ],
+            [
+                'name' => 'Pantoprazol',
+            ],
         ];
 
         foreach ($input as $data) {

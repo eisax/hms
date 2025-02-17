@@ -14,17 +14,65 @@ class ServiceTableSeeder extends Seeder
     {
         $input = [
             [
-                'name' => 'service 1',
-                'quantity' => 2,
-                'rate' => 10,
+                'name' => 'X-Ray (Chest)',
+                'quantity' => 1,
+                'rate' => 4500,
                 'status' => 1,
             ],
             [
-                'name' => 'service 2',
-                'quantity' => 3,
-                'rate' => 20,
+                'name' => 'Complete Blood Count',
+                'quantity' => 1,
+                'rate' => 1500,
+                'status' => 1,
+            ],
+            [
+                'name' => 'MRI Scan',
+                'quantity' => 1,
+                'rate' => 25000,
+                'status' => 1,
+            ],
+            [
+                'name' => 'Physiotherapy Session',
+                'quantity' => 5,
+                'rate' => 2000,
+                'status' => 1,
+            ],
+            [
+                'name' => 'ECG Test',
+                'quantity' => 1,
+                'rate' => 3000,
                 'status' => 0,
             ],
+            [
+                'name' => 'Ultrasound (Abdomen)',
+                'quantity' => 1,
+                'rate' => 6000,
+                'status' => 1,
+            ],
+            [
+                'name' => 'Dental Cleaning',
+                'quantity' => 1,
+                'rate' => 3500,
+                'status' => 1,
+            ],
+            [
+                'name' => 'Emergency Room Fee',
+                'quantity' => 1,
+                'rate' => 10000,
+                'status' => 1,
+            ],
+            [
+                'name' => 'Vaccination (Flu Shot)',
+                'quantity' => 1,
+                'rate' => 1200,
+                'status' => 1,
+            ],
+            [
+                'name' => 'CT Scan',
+                'quantity' => 1,
+                'rate' => 18000,
+                'status' => 1,
+            ]
         ];
 
         foreach ($input as $data) {

@@ -15,7 +15,7 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminRole = Department::whereName('Admin')->first();
+        $adminRole = Department::whereName('Admin')->firstOrCreate(['name' => 'Admin']);
 
         $input = [
             'first_name' => 'Super',
@@ -31,7 +31,13 @@ class AdminUserSeeder extends Seeder
             'department_id' => $adminRole->id,
         ];
 
-        $user = User::create($input);
-        $user->assignRole($adminRole);
+        $user = User::firstOrCreate(
+            ['email' => 'admin@hms.com'],
+            $input
+        );
+
+        if ($user->wasRecentlyCreated) {
+            $user->assignRole($adminRole);
+        }
     }
 }

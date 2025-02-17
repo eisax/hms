@@ -12,7 +12,20 @@ class DocumentTypesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $input = ['Adhar card', 'PAN card', 'Passport', 'Light Bill'];
+        $input = [
+            'Passport', 
+            'Light Bill',
+            'Driver License',
+            'Voter ID',
+            'Birth Certificate',
+            'Medical Report',
+            'Insurance Card',
+            'Prescription Slip',
+            'Discharge Summary',
+            'Lab Report',
+            'X-Ray Report',
+            'Medical Bill'
+        ];
 
         foreach ($input as $value) {
             DocumentType::create(['name' => $value]);
