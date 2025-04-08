@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\AppointmentReminder::class,
         SendAppointmentReminderEmail::class,
+        Commands\InitializeDatabase::class, // Register your new command here
     ];
 
     /**
