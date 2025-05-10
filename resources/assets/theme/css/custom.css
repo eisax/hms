@@ -142,3 +142,11 @@ ul {
   background-color: #DEE2E6;
   opacity: 1;
 }
+
+.horizontal-sidebar
+    .horizontal-menu
+    .nav-item
+    .nav-link:hover
+    .horizontal-menu-title {
+    color: #212529;
+}

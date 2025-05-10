@@ -1,0 +1,26 @@
+:root {
+    /* Colors */
+    --primary: #FF8E4B;
+    --primary-rgb: 255, 142, 75;
+    --secondary: #909090;
+    --success: #161E54;
+    --info: #0dcaf0;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    
+    /* Transitions */
+    --transition: all 0.3s ease-in-out;
+    
+    /* Fonts */
+    --heading-font-family: 'Poppins', sans-serif;
+    --body-font-family: 'Poppins', sans-serif;
+    
+    /* Font Sizes */
+    --font-size: 15px;
+    
+    /* Colors from existing codebase */
+    --paragraph-color: #6c757d;
+    --black-color: #212529;
+    --white-color: #ffffff;
+    --main-color: var(--primary);
+}
