@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/third-party.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <link href="{{ mix('/assets/css/custom-auth.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/auth-custom.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/custom-variables.css') }}" rel="stylesheet" type="text/css"/>
     {{--    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages.css') }}"> --}}
     <!-- CSS Libraries -->
     @yield('css')
